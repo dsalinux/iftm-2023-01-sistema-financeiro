@@ -9,7 +9,9 @@
     <h:form>
         <p:toolbar>
             <p:toolbarGroup>
-                <p:commandButton icon="fa-solid fa-save" value="Salvar"></p:commandButton>
+                <p:commandButton icon="fa-solid fa-save" update="@form"
+                                 actionListener="#{usuarioBean.salvar()}"
+                                 value="Salvar"></p:commandButton>
                 <p:spacer width="4px"></p:spacer>
                 <p:commandButton icon="fa-solid fa-file" value="Novo"></p:commandButton>
                 <p:spacer width="4px"></p:spacer>
@@ -18,20 +20,25 @@
         </p:toolbar>
         <h:panelGrid columns="2">
             <p:outputLabel value="Nome" for="inputNome"></p:outputLabel>
-            <p:inputText id="inputNome"></p:inputText>
+            <p:inputText id="inputNome" value="#{usuarioBean.usuario.nome}"></p:inputText>
             
             <p:outputLabel value="Email" for="inputEmail"></p:outputLabel>
-            <p:inputText id="inputEmail"></p:inputText>
+            <p:inputText id="inputEmail" value="#{usuarioBean.usuario.email}"></p:inputText>
             
             <p:outputLabel value="Senha" for="inputSenha"></p:outputLabel>
-            <p:password id="inputSenha"></p:password>
+            <p:password id="inputSenha" value="#{usuarioBean.usuario.senha}"></p:password>
         </h:panelGrid>
-        <p:dataTable>
+        <p:dataTable value="#{usuarioBean.usuarios}" var="usr">
+            <p:column>
+                <p:commandButton icon="fa-solid fa-trash" update="@form"
+                                 actionListener="#{usuarioBean.remover(usr)}"
+                                 ></p:commandButton>
+            </p:column>
             <p:column headerText="Nome">
-                
+                <h:outputText value="#{usr.nome}"></h:outputText>
             </p:column>
             <p:column headerText="Email">
-                
+                <h:outputText value="#{usr.email}"></h:outputText>
             </p:column>
         </p:dataTable>
     </h:form>
