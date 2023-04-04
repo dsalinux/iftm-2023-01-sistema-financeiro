@@ -15,12 +15,12 @@
         <aside class="menu">
             <div class="logo">
                 <img src="#{resource['financeiro:imagens/logo.png']}"></img>
-                <h:graphicImage library="financeiro" name="imagens/logo.png"></h:graphicImage>
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-                    <li><a href="index.html"><i class="fa-regular fa-file-lines"></i> Cadastros</a></li>
+                    <li><a href="#{request.contextPath}/index.xhtml" class="active"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+                    <li><a href="cadastros/usuario.xhtml
+                           "><i class="fa-regular fa-file-lines"></i> Cadastros</a></li>
                     <li><a href="index.html"><i class="fa-solid fa-cash-register"></i> Financeiro</a></li>
                     <li><a href="index.html"><i class="fa-solid fa-boxes-stacked"></i> Estoque</a></li>
                     <li><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Relatórios</a></li>
@@ -34,6 +34,12 @@
         </header>
         <main>
             <div class="content">
+                <p:growl>
+                    <p:autoUpdate></p:autoUpdate>
+                </p:growl>
+                <p:messages showDetail="true">
+                    <p:autoUpdate></p:autoUpdate>
+                </p:messages>
                 <ui:insert></ui:insert>
             </div>
         </main>

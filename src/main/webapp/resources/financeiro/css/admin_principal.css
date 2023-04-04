@@ -2,10 +2,11 @@
     /* --background: #222832;
     --color: #fff; */
     --background: linear-gradient(45deg, #8BC34A, #009688);
-    --background-menu: linear-gradient(45deg, #653f95, #4bb2bf);;
+    --background-menu: linear-gradient(45deg, #653f95, #4bb2bf);
+    ;
     --background-header: #4bb2bf;
     --background-footer: #ccc;
-    --color: #333;
+    --color: #FFF;
     --header-height: 60px;
     --menu-width: 300px;
 }
@@ -79,9 +80,7 @@ footer p {
     left: calc(-1 * var(--menu-width));
     transition: left 0.3s;
 }
-.menu-show {
-    left: 0;
-}
+
 .overlay-menu {
     position: fixed;
     top: 0;
@@ -92,9 +91,7 @@ footer p {
     z-index: 1;
     display: none;
 }
-.overlay-menu-show {
-    display: block;
-}
+
 .menu nav ul {
     list-style: none;
     padding: 0;
@@ -124,8 +121,8 @@ footer p {
 header.collapse-menu, footer.collapse-menu, main.collapse-menu {
     padding-left: 0;
 }
-.menu.collapse-menu {
-    left: calc(-1 * var(--menu-width));
+.menu-show {
+    left: 0;
 }
 @media screen and (min-width: 768px) {
     .menu {
@@ -134,4 +131,15 @@ header.collapse-menu, footer.collapse-menu, main.collapse-menu {
     main, footer, header {
         padding-left: var(--menu-width);
     }
+    .menu.collapse-menu {
+        left: calc(-1 * var(--menu-width));
+    }
+}
+
+@media screen and (max-width: 767px){
+    .overlay-menu-show {
+        display: block;
+    }
+
+
 }

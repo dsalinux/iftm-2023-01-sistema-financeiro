@@ -3,18 +3,37 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      template="/template_1.xhtml"
+      template="/template.xhtml"
       xmlns:p="http://primefaces.org/ui">
 
-    <h1>Bem vindo ao sistema</h1>
-    
     <h:form>
-        <p:inputText value="#{helloBean.nome}"></p:inputText>
-        <p:commandButton value="Dizer ola"
-                         actionListener="#{helloBean.dizerOla()}"
-                         update="@form"></p:commandButton>
-
-        <p:messages></p:messages>
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton icon="fa-solid fa-save" value="Salvar"></p:commandButton>
+                <p:spacer width="4px"></p:spacer>
+                <p:commandButton icon="fa-solid fa-file" value="Novo"></p:commandButton>
+                <p:spacer width="4px"></p:spacer>
+                <p:commandButton icon="fa-solid fa-search" value="Pesquisar"></p:commandButton>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <h:panelGrid columns="2">
+            <p:outputLabel value="Nome" for="inputNome"></p:outputLabel>
+            <p:inputText id="inputNome"></p:inputText>
+            
+            <p:outputLabel value="Email" for="inputEmail"></p:outputLabel>
+            <p:inputText id="inputEmail"></p:inputText>
+            
+            <p:outputLabel value="Senha" for="inputSenha"></p:outputLabel>
+            <p:password id="inputSenha"></p:password>
+        </h:panelGrid>
+        <p:dataTable>
+            <p:column headerText="Nome">
+                
+            </p:column>
+            <p:column headerText="Email">
+                
+            </p:column>
+        </p:dataTable>
     </h:form>
 
 </ui:composition>
