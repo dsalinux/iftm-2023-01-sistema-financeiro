@@ -20,9 +20,23 @@ public class UsuarioBean implements Serializable {
     private List<Usuario> usuarios;
     private Long id = 1L;
     
+    @Getter
+    private Estado estado = Estado.PESQUISANDO;
+    
+    enum Estado {
+        CRIANDO,
+        EDITANDO,
+        PESQUISANDO
+    }
+    
     public UsuarioBean(){
         usuario = new Usuario();
         usuarios = new ArrayList<>();
+    }
+    
+    public void novo() {
+        usuario = new Usuario();
+        estado = Estado.CRIANDO;
     }
     
     public void salvar(){
@@ -31,12 +45,21 @@ public class UsuarioBean implements Serializable {
         usuario = new Usuario();
         FacesContext.getCurrentInstance()
             .addMessage("", new FacesMessage("Salvo com sucesso"));
+        estado = Estado.PESQUISANDO;
+    }
+    
+    public void listar(){
+        estado = Estado.PESQUISANDO;
     }
     
     public void remover(Usuario usuario){
         usuarios.remove(usuario);
         FacesContext.getCurrentInstance()
             .addMessage("", new FacesMessage("Removido"));
+    }
+    public void editar(Usuario usuario) {
+        this.usuario = usuario;
+        estado = Estado.EDITANDO;
     }
     
 }
