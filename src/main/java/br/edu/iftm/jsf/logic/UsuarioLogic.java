@@ -1,19 +1,23 @@
 package br.edu.iftm.jsf.logic;
 
+import br.edu.iftm.jsf.dao.UsuarioDAO;
 import br.edu.iftm.jsf.entity.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 public class UsuarioLogic implements GenericLogic<Usuario> {
 
     private List<Usuario> usuarios = new ArrayList<>();
     private Long id = 1L;
     
+    @Inject
+    private UsuarioDAO dao;
+    
     @Override
     public Usuario salvar(Usuario entity) {
-        entity.setId(id++);
-        usuarios.add(entity);
+        dao.salvar(entity);
         return entity;
     }
 
