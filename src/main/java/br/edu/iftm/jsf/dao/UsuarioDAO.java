@@ -24,18 +24,6 @@ public class UsuarioDAO implements Serializable {
             Connection conexao =
                     DriverManager.getConnection(url, user, pass);
             conexao.setAutoCommit(true);
-/**         Com Statement a query é passada posteiormente */
-//            Statement st = conexao.createStatement();
-//            String insert = "insert into usuario (nome, email, senha)";
-//            insert += " values ('"+usuario.getNome()
-//                    + "', '" + usuario.getEmail() + "', '"
-//                    + usuario.getSenha()+"')";
-//            st.execute(insert);
-
-/** Com o PreparedStatement a query pode ser preparada antes e usar ? para definir
- * local de atributos
- * 
- */
             String query = "insert into usuario (nome, email, senha) values (?,?,?)";
             PreparedStatement ps = conexao.prepareStatement(query);
             ps.setString(1, usuario.getNome());
