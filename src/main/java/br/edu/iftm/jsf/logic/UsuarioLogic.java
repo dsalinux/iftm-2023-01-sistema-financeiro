@@ -9,9 +9,6 @@ import javax.inject.Inject;
 
 public class UsuarioLogic implements GenericLogic<Usuario> {
 
-    private List<Usuario> usuarios = new ArrayList<>();
-    private Long id = 1L;
-    
     @Inject
     private UsuarioDAO dao;
     
@@ -23,12 +20,12 @@ public class UsuarioLogic implements GenericLogic<Usuario> {
 
     @Override
     public void remover(Usuario entity) {
-        usuarios.remove(entity);
+        ///usuarios.remove(entity);
     }
 
     @Override
     public List<Usuario> listar() {
-        return usuarios;
+        return dao.listar();
     }
     
 }
