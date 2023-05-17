@@ -2,8 +2,9 @@ package br.edu.iftm.jsf.logic;
 
 import br.edu.iftm.jsf.dao.UsuarioDAO;
 import br.edu.iftm.jsf.entity.Usuario;
-import java.io.Serializable;
-import java.util.ArrayList;
+import br.edu.iftm.jsf.util.Transacional;
+import br.edu.iftm.jsf.util.exception.ErroNegocioException;
+import br.edu.iftm.jsf.util.exception.ErroSistemaException;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -13,18 +14,24 @@ public class UsuarioLogic implements GenericLogic<Usuario> {
     private UsuarioDAO dao;
     
     @Override
-    public Usuario salvar(Usuario entity) {
+    @Transacional
+    public Usuario salvar(Usuario entity)  throws ErroNegocioException, ErroSistemaException {
+        if(!"".equals(entity.getNovaSenha())) {
+            String hash = entity.getNovaSenha();//criptografar a senha
+            entity.setSenha(hash);
+        }
         dao.salvar(entity);
         return entity;
     }
 
     @Override
-    public void remover(Usuario entity) {
-        ///usuarios.remove(entity);
+    @Transacional
+    public void remover(Usuario entity)  throws ErroNegocioException, ErroSistemaException{
+        dao.deletar(entity.getId());
     }
 
     @Override
-    public List<Usuario> listar() {
+    public List<Usuario> listar()  throws ErroNegocioException, ErroSistemaException{
         return dao.listar();
     }
     

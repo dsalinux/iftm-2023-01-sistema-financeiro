@@ -1,5 +1,7 @@
 package br.edu.iftm.jsf.util;
 
+import br.edu.iftm.jsf.util.exception.ErroNegocioException;
+import br.edu.iftm.jsf.util.exception.ErroSistemaException;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -25,10 +27,16 @@ public class BeanUtil implements Serializable {
     public void addAviso(String message) {
         addAviso("Aviso", message);
     }
+    public void addAviso(ErroNegocioException ex){
+        addAviso(ex.getMessage());
+    }
     public void addError(String resumo, String detalhe) {
         addMessage(FacesMessage.SEVERITY_ERROR, resumo, detalhe);
     }
     public void addError(String message){
         addError("Erro", message);
+    }
+    public void addError(ErroSistemaException ex){
+        addError(ex.getMessage());
     }
 }

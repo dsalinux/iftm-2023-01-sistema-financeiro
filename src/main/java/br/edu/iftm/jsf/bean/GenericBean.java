@@ -1,14 +1,14 @@
 package br.edu.iftm.jsf.bean;
 
-import br.edu.iftm.jsf.entity.Usuario;
 import br.edu.iftm.jsf.logic.GenericLogic;
-import br.edu.iftm.jsf.logic.UsuarioLogic;
 import br.edu.iftm.jsf.util.BeanUtil;
+import br.edu.iftm.jsf.util.exception.ErroNegocioException;
+import br.edu.iftm.jsf.util.exception.ErroSistemaException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
 import lombok.Getter;
 
 public abstract class GenericBean<E, L extends GenericLogic<E>> extends BeanUtil{
@@ -36,26 +36,54 @@ public abstract class GenericBean<E, L extends GenericLogic<E>> extends BeanUtil
     }
     
     public void novo(){
+        long inicio = new Date().getTime()+30;
+        while(inicio > new Date().getTime()) {
+            
+        }
         newInstanceOfEntity();
         estado = Estado.CRIANDO;
     }
   
     public void salvar(){
-        getLogic().salvar(entity);
-        addInfo("Salvo com sucesso.");
-        newInstanceOfEntity();
-        estado = Estado.PESQUISANDO;
+        try {
+            getLogic().salvar(entity);
+            addInfo("Salvo com sucesso.");
+            newInstanceOfEntity();
+            estado = Estado.PESQUISANDO;
+        } catch (ErroNegocioException ex) {
+            addAviso(ex);
+        } catch (ErroSistemaException ex) {
+            addError(ex);
+            Logger.getLogger(GenericBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            addError("Erro no sistema: "+ex.getMessage());
+            Logger.getLogger(GenericBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
     public void listar(){
-        estado = Estado.PESQUISANDO;
-        entitys = getLogic().listar();
+        try {
+            estado = Estado.PESQUISANDO;
+            entitys = getLogic().listar();
+        } catch (ErroNegocioException ex) {
+            addAviso(ex);
+        } catch (ErroSistemaException ex) {
+            addError(ex);
+            Logger.getLogger(GenericBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void remover(E entity){
-        getLogic().remover(entity);
-        addInfo("Removido com sucesso.");
+        try {
+            getLogic().remover(entity);
+            addInfo("Removido com sucesso.");
+        } catch (ErroNegocioException ex) {
+            addAviso(ex);
+        } catch (ErroSistemaException ex) {
+            addError(ex);
+            Logger.getLogger(GenericBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void editar(E entity) {
         this.entity = entity;

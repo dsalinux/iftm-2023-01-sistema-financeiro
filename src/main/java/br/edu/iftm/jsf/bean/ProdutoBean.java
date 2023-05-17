@@ -2,7 +2,6 @@ package br.edu.iftm.jsf.bean;
 
 import br.edu.iftm.jsf.entity.Produto;
 import br.edu.iftm.jsf.logic.ProdutoLogic;
-import br.edu.iftm.jsf.logic.GenericLogic;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

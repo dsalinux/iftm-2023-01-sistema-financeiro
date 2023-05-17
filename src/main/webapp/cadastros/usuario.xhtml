@@ -9,7 +9,6 @@
 
     <h:form>
         <sf:crudToolbar crudBean="#{usuarioBean}"/>
-        <h1>Estado: #{usuarioBean.estado}</h1>
         <h:panelGrid columns="2" rendered="#{usuarioBean.estado != 'PESQUISANDO'}">
             <p:outputLabel value="Nome" for="inputNome"></p:outputLabel>
             <p:inputText id="inputNome" value="#{usuarioBean.entity.nome}"></p:inputText>
@@ -18,7 +17,7 @@
             <p:inputText id="inputEmail" disabled="#{usuarioBean.estado == 'EDITANDO'}" value="#{usuarioBean.entity.email}"></p:inputText>
             
             <p:outputLabel value="Senha" for="inputSenha"></p:outputLabel>
-            <p:password id="inputSenha" value="#{usuarioBean.entity.senha}"></p:password>
+            <p:password id="inputSenha" value="#{usuarioBean.entity.novaSenha}"></p:password>
         </h:panelGrid>
         <p:dataTable value="#{usuarioBean.entitys}" var="usr" rendered="#{usuarioBean.estado == 'PESQUISANDO'}">
             <p:column>

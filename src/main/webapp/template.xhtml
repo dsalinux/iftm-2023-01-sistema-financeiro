@@ -42,6 +42,12 @@
                 </p:messages>
                 <ui:insert></ui:insert>
             </div>
+            
+            <p:ajaxStatus onstart="PF('dialogStatus').show();" oncomplete="PF('dialogStatus').hide();"></p:ajaxStatus>
+            <p:dialog widgetVar="dialogStatus" modal="true" showHeader="false">
+                <div>Processando...</div>
+            </p:dialog>
+            
         </main>
         <footer>
             <p>IFTM - Atividade Escolar</p>

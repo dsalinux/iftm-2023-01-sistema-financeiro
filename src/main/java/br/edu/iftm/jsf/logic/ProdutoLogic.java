@@ -2,8 +2,9 @@ package br.edu.iftm.jsf.logic;
 
 import br.edu.iftm.jsf.dao.ProdutoDAO;
 import br.edu.iftm.jsf.entity.Produto;
-import java.io.Serializable;
-import java.util.ArrayList;
+import br.edu.iftm.jsf.util.Transacional;
+import br.edu.iftm.jsf.util.exception.ErroNegocioException;
+import br.edu.iftm.jsf.util.exception.ErroSistemaException;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -14,18 +15,32 @@ public class ProdutoLogic implements GenericLogic<Produto> {
     private ProdutoDAO dao;
     
     @Override
-    public Produto salvar(Produto entity) {
+    @Transacional
+    public Produto salvar(Produto entity)  throws ErroNegocioException, ErroSistemaException{
+        if("".equals(entity.getNome())){
+            throw new ErroNegocioException("Por favor informe o nome");
+        }
+        if("".equals(entity.getDescricao())){
+            throw new ErroNegocioException("Por favor informe a descrição");
+        }
+        if(entity.getValor() == null || entity.getValor().floatValue() <= 0f){
+            throw new ErroNegocioException("Por favor informe um valor maior que zero.");
+        }
+        if(entity.getDataFabricacao() == null){
+            throw new ErroNegocioException("Por favor informe a data fabricação");
+        }
         entity = dao.salvar(entity);
         return entity;
     }
 
     @Override
-    public void remover(Produto entity) {
-        dao.deletar(entity);
+    @Transacional
+    public void remover(Produto entity)  throws ErroNegocioException, ErroSistemaException{
+        dao.deletar(entity.getId());
     }
 
     @Override
-    public List<Produto> listar() {
+    public List<Produto> listar()  throws ErroNegocioException, ErroSistemaException{
         return dao.listar();
     }
     
