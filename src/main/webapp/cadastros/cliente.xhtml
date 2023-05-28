@@ -5,10 +5,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       template="/template.xhtml"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:sf="http://xmlns.jcp.org/jsf/composite/sfcomp">
+      xmlns:sf="http://xmlns.jcp.org/jsf/composite/sfcomp"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form>
-        <sf:crudToolbar crudBean="#{clienteBean}" exibeSalvar="false">
+        <sf:crudToolbar crudBean="#{clienteBean}">
             <p:button value="Relatório"></p:button>
         </sf:crudToolbar>
         <h1>Estado: #{clienteBean.estado}</h1>
@@ -22,8 +23,11 @@
             <p:outputLabel value="CPF" for="inputCPF"></p:outputLabel>
             <p:inputMask value="#{clienteBean.entity.cpf}" id="inputCPF" mask="999.999.999-99"></p:inputMask>
             
-            <p:outputLabel value="Data Nascimento" for="inputData"></p:outputLabel>
-            <p:datePicker  monthNavigator="true" yearNavigator="true" yearRange="1950:3023" showWeek="true" value="#{clienteBean.entity.dataNascimento}" id="inputData"></p:datePicker>
+            <p:outputLabel value="Data Nascimento" for="@next"></p:outputLabel>
+            <p:inputText value="#{clienteBean.entity.dataNascimento}">
+                <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+            </p:inputText>
+            <!--<p:datePicker  monthNavigator="true" yearNavigator="true" yearRange="1950:3023" showWeek="true" value="#{clienteBean.entity.dataNascimento}" id="inputData"></p:datePicker>-->
             
         </h:panelGrid>
         <p:dataTable value="#{clienteBean.entitys}" var="entity" rendered="#{clienteBean.estado == 'PESQUISANDO'}">
@@ -45,7 +49,9 @@
                 <h:outputText value="#{entity.cpf}"></h:outputText>
             </p:column>
             <p:column headerText="Data Nascimento">
-                <h:outputText value="#{entity.dataNascimento}"></h:outputText>
+                <h:outputText value="#{entity.dataNascimento}">
+                <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  
+                </h:outputText>
             </p:column>
         </p:dataTable>
     </h:form>
