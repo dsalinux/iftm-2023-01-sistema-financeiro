@@ -44,4 +44,8 @@ public class ProdutoLogic implements GenericLogic<Produto> {
         return dao.listar();
     }
     
+    public Produto buscarPorId(Long id) {
+        return dao.buscarPorID(id);
+    }
+    
 }

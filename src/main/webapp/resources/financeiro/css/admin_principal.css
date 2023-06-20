@@ -39,21 +39,41 @@ main .content {
 header {
     background: var(--background-header);
     display: flex;
+    
+    justify-content: space-between
+}
+header .titulo {
+    display: flex;
     line-height: 70px;
 }
-header h1 {
+header .titulo h1{
     font-size: 1.6em;
 }
-header a {
+header .btn-toogle-menu, header .opcoes a {
     color: var(--color);
     text-decoration: none;
     font-size: 2em;
     text-align: center;
     width: 70px;
-    height: 70px;
+    line-height: 70px;
 }
 header a:hover {
     background-color: rgba(0,0,0,0.2);
+}
+header .opcoes {
+    display: flex;
+    align-items: center;
+    padding-right: 1em;
+    height: 70px;
+}
+header .opcoes .usuario-logado {
+    display: flex;
+    gap: 10px;
+    font-weight: bold;
+    align-items: center;
+}
+header .opcoes .usuario-logado img {
+    height: 50px;
 }
 footer {
     background: var(--background-footer);

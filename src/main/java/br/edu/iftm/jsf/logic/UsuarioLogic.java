@@ -9,11 +9,8 @@ import br.edu.iftm.jsf.util.exception.ErroNegocioException;
 import br.edu.iftm.jsf.util.exception.ErroSistemaException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.Security;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 
 public class UsuarioLogic implements GenericLogic<Usuario> {
@@ -37,6 +34,9 @@ public class UsuarioLogic implements GenericLogic<Usuario> {
             throw new ErroSistemaException("Erro de segurança. Algorítimo SHA1PRNG não disponível.", ex);
         }
         entity.setSalt(secureRandom.nextLong()+"");
+        if((entity.getSenha() == null || "".equals(entity.getSenha())) && (entity.getNovaSenha() == null || "".equals(entity.getNovaSenha().trim()))){
+            throw new ErroNegocioException("Senha deve ser preenchida.");
+        }
         if(!"".equals(entity.getNovaSenha())) {
             String hash = entity.getNovaSenha() + entity.getSalt();
             hash = HashUtil.sha256Hex(hash);
@@ -58,6 +58,16 @@ public class UsuarioLogic implements GenericLogic<Usuario> {
     @Override
     public List<Usuario> listar()  throws ErroNegocioException, ErroSistemaException{
         return dao.listar();
+    }
+
+    public Usuario logar(String email, String senha)  throws ErroNegocioException{
+        Usuario usuario  = dao.findUsuarioByEmail(email);
+        String hash = senha + usuario.getSalt();
+        hash = HashUtil.sha256Hex(hash);
+        if(!usuario.getSenha().equals(hash)) {
+            throw new ErroNegocioException("Usuário ou senha inválidos");
+        }
+        return usuario;
     }
     
 }

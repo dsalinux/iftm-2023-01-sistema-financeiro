@@ -7,23 +7,31 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:sf="http://xmlns.jcp.org/jsf/composite/sfcomp">
 
-    <h:form>
+    <h:form enctype="multipart/form-data">
         <sf:crudToolbar crudBean="#{produtoBean}">
             <p:button value="Relatório"></p:button>
         </sf:crudToolbar>
         <h:panelGrid columns="2" rendered="#{produtoBean.estado != 'PESQUISANDO'}">
             <p:outputLabel value="Nome" for="inputNome"></p:outputLabel>
-            <p:inputText id="inputNome" value="#{produtoBean.entity.nome}"></p:inputText>
+            <h:panelGroup>
+                <p:inputText id="inputNome" value="#{produtoBean.entity.nome}"></p:inputText>
+                <p:message for="@previous"></p:message>
+            </h:panelGroup>
             
             <p:outputLabel value="Descrição" for="inputdesc"></p:outputLabel>
             <p:inputText id="inputdesc" value="#{produtoBean.entity.descricao}" ></p:inputText>
             
             <p:outputLabel value="Valor" for="inputvalor"></p:outputLabel>
-            <p:inputText id="inputvalor" value="#{produtoBean.entity.valor}"></p:inputText>
-            
+            <h:panelGroup>
+                <p:inputText id="inputvalor" value="#{produtoBean.entity.valor}"></p:inputText>
+                <p:message for="@previous"></p:message>
+            </h:panelGroup>
             
             <p:outputLabel value="Data Fabricação" for="inputData"></p:outputLabel>
             <p:datePicker  monthNavigator="true" yearNavigator="true" showWeek="true" value="#{produtoBean.entity.dataFabricacao}" id="inputData"></p:datePicker>
+            
+            <p:outputLabel value="Foto"></p:outputLabel>
+            <p:fileUpload value="#{produtoBean.foto}" mode="simple" skinSimple="true"></p:fileUpload>
             
         </h:panelGrid>
         <p:dataTable value="#{produtoBean.entitys}" var="entity" rendered="#{produtoBean.estado == 'PESQUISANDO'}">
@@ -46,6 +54,9 @@
             </p:column>
             <p:column headerText="Data Fabricação">
                 <h:outputText value="#{entity.dataFabricacao}"></h:outputText>
+            </p:column>
+            <p:column>
+                <img src="#{request.contextPath}/imagem?id=#{entity.id}" height="50px"></img>
             </p:column>
         </p:dataTable>
     </h:form>

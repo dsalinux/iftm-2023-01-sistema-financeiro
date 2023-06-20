@@ -1,5 +1,6 @@
 package br.edu.iftm.jsf.entity;
 
+import br.edu.iftm.jsf.util.HashUtil;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -16,8 +17,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,6 +40,7 @@ public class Usuario implements Serializable {
     private Long id;
     
     @NotEmpty(message = "Nome obrigatório")
+    @NotBlank(message = "Nome obrigatório")
     @Size(min=4, max =45, message = "Nome deve ter no mínimo 4 caracteres" )
     private String nome;
     
@@ -53,7 +55,7 @@ public class Usuario implements Serializable {
     @Column(name = "data_cadastro")
     private Date dataCadastro;
     private String salt;
-    @Transient
+    @Transient //TODO Resolver problema de validação
     private String novaSenha;
      
     @ManyToMany
@@ -61,4 +63,9 @@ public class Usuario implements Serializable {
             joinColumns = {@JoinColumn(name = "usuario_id")},
          inverseJoinColumns = {@JoinColumn(name = "permissao_id")})
     private List<Permissao> permissaoList;
+    
+    public String getEmailHash() {
+        return HashUtil.md5Hex(email);
+    }
+    
 }

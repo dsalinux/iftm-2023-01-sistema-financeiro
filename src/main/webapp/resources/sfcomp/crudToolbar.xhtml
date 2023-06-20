@@ -15,14 +15,14 @@
     <cc:implementation>
         <p:toolbar>
             <p:toolbarGroup>
-                <p:commandButton icon="fa-solid fa-file" update="@form"
+                <p:commandButton icon="fa-solid fa-file" update="@form" resetValues="true" process="@this"
                                  actionListener="#{cc.attrs.crudBean.novo()}" value="Novo"></p:commandButton>
                 <p:spacer width="4px"></p:spacer>
                 <p:commandButton icon="fa-solid fa-save" update="@form"
                                  actionListener="#{cc.attrs.crudBean.salvar()}"
                                  value="Salvar" rendered="#{cc.attrs.crudBean.estado != 'PESQUISANDO' and cc.attrs.exibeSalvar}"></p:commandButton>
                 <p:spacer width="4px"></p:spacer>
-                <p:commandButton icon="fa-solid #{cc.attrs.crudBean.estado != 'PESQUISANDO'?'fa-arrow-left':'fa-search'}" update="@form"
+                <p:commandButton icon="fa-solid #{cc.attrs.crudBean.estado != 'PESQUISANDO'?'fa-arrow-left':'fa-search'}" update="@form" immediate="true"
                                  actionListener="#{cc.attrs.crudBean.listar()}" value="#{cc.attrs.crudBean.estado != 'PESQUISANDO'?'Voltar':'Pesquisar'}"></p:commandButton>
             </p:toolbarGroup>
             <p:toolbarGroup align="right">

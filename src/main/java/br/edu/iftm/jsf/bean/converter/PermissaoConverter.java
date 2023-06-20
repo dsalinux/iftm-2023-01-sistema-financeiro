@@ -6,7 +6,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(value = "permissaoConverter")
+@FacesConverter(value = "permissaoConverter", forClass = Permissao.class)
 public class PermissaoConverter implements Converter<Permissao>{
 
     @Override

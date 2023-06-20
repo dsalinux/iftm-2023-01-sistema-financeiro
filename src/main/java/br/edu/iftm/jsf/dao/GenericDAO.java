@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import lombok.Getter;
 
 /**
  *
@@ -13,7 +14,7 @@ import javax.persistence.EntityManager;
  */
 public abstract class GenericDAO<E, ID> implements Serializable {
     
-    @Inject
+    @Inject @Getter
     private EntityManager manager;
     
     public E salvar(E entity) throws ErroSistemaException {
@@ -28,6 +29,11 @@ public abstract class GenericDAO<E, ID> implements Serializable {
     public void deletar(ID id){
         E entity = manager.find(getClassEntity(), id);
         manager.remove(entity);
+    }
+    
+    public E buscarPorID(ID id) {
+        E entity = manager.find(getClassEntity(), id);
+        return entity;
     }
     
     public List<E> listar(){
