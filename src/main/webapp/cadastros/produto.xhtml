@@ -9,7 +9,7 @@
 
     <h:form enctype="multipart/form-data">
         <sf:crudToolbar crudBean="#{produtoBean}">
-            <p:button value="Relatório"></p:button>
+             
         </sf:crudToolbar>
         <h:panelGrid columns="2" rendered="#{produtoBean.estado != 'PESQUISANDO'}">
             <p:outputLabel value="Nome" for="inputNome"></p:outputLabel>
@@ -34,8 +34,11 @@
             <p:fileUpload value="#{produtoBean.foto}" mode="simple" skinSimple="true"></p:fileUpload>
             
         </h:panelGrid>
-        <p:dataTable value="#{produtoBean.entitys}" var="entity" rendered="#{produtoBean.estado == 'PESQUISANDO'}">
-            <p:column>
+        <p:commandButton value="Exportar PDF" rendered="#{produtoBean.estado == 'PESQUISANDO' and produtoBean.entitys.size() > 0}">
+                    <p:dataExporter type="pdf" target="tblProdutos" fileName="produtos"/>
+                </p:commandButton>
+        <p:dataTable id="tblProdutos" value="#{produtoBean.entitys}" var="entity" rendered="#{produtoBean.estado == 'PESQUISANDO'}">
+            <p:column  exportable="false">
                 <p:commandButton icon="fa-solid fa-trash" update="@form"
                                  actionListener="#{produtoBean.remover(entity)}"
                                  ></p:commandButton>
@@ -55,7 +58,7 @@
             <p:column headerText="Data Fabricação">
                 <h:outputText value="#{entity.dataFabricacao}"></h:outputText>
             </p:column>
-            <p:column>
+            <p:column  exportable="false">
                 <img src="#{request.contextPath}/imagem?id=#{entity.id}" height="50px"></img>
             </p:column>
         </p:dataTable>

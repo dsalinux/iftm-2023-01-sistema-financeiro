@@ -18,7 +18,7 @@
                 <p:commandButton icon="fa-solid fa-file" update="@form" resetValues="true" process="@this"
                                  actionListener="#{cc.attrs.crudBean.novo()}" value="Novo"></p:commandButton>
                 <p:spacer width="4px"></p:spacer>
-                <p:commandButton icon="fa-solid fa-save" update="@form"
+                <p:commandButton icon="fa-solid fa-save" update="@form" ajax="false"
                                  actionListener="#{cc.attrs.crudBean.salvar()}"
                                  value="Salvar" rendered="#{cc.attrs.crudBean.estado != 'PESQUISANDO' and cc.attrs.exibeSalvar}"></p:commandButton>
                 <p:spacer width="4px"></p:spacer>

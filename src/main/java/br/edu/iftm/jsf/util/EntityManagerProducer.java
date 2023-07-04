@@ -1,7 +1,7 @@
 package br.edu.iftm.jsf.util;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
@@ -17,8 +17,7 @@ public class EntityManagerProducer {
         this.factory = Persistence.createEntityManagerFactory("sistemaFinanceiroPU");
     }
     
-    @Produces
-    @RequestScoped
+    @Produces @SessionScoped
     public EntityManager createEntityManager() {
         return factory.createEntityManager();
     }
